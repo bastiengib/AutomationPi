@@ -6,6 +6,7 @@
 function Computer () {
     this.wol = require('node-wol');
     this.exec = require('child_process').exec;
+    this.config = require('./computer.config');
 }
 
 Computer.prototype.powerOn = function () {
@@ -23,7 +24,7 @@ Computer.prototype.powerOn = function () {
 
 Computer.prototype.powerOff = function() {
     console.log('[AutomationPi]: Power Off Computer');
-    this.exec("net rpc shutdown -h -f -t 0 -C 'AutomotionPi : arrêt du système à distance demandé' -U Bastien%cr0ust1bat -I 192.168.1.5", function (error, stdout, stderr) {
+    this.exec("net rpc shutdown -h -f -t 0 -C 'AutomotionPi : arrêt du système à distance demandé' "+this.config, function (error, stdout, stderr) {
         console.log('stdout: ' + stdout);
         console.log('stderr: ' + stderr);
         if (error !== null) {
