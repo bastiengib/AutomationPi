@@ -24,7 +24,7 @@ Computer.prototype.powerOn = function () {
 
 Computer.prototype.powerOff = function() {
     console.log('[AutomationPi]: Power Off Computer');
-    this.exec("net rpc shutdown -h -t 0 -C 'AutomotionPi : arrêt du système à distance demandé' "+this.config, function (error, stdout, stderr) {
+    this.exec("net rpc shutdown -t 0 -C 'AutomotionPi : arrêt du système à distance demandé' "+this.config, function (error, stdout, stderr) {
         console.log('stdout: ' + stdout);
         console.log('stderr: ' + stderr);
         if (error !== null) {

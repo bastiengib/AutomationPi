@@ -19,14 +19,18 @@ function Push (server) {
                         if (push.sender_name === "IFTTT" && push.title === "AutomationPi" && !push.dismissed) {
                             console.log("[assistant] Commande reçue: "+push.body);
                             server.inject('/'+push.body).then(function(data) {
-                                var result =JSON.parse(data.payload);
-                                if (result.sendSMS) {
-                                    result.options.source_user_iden = this.iden;
-                                    pusher.sendSMS(result.options, function(error, response) {
-                                        if (error) {
-                                            console.log("[send SMS] :",error);
-                                        }
-                                    });
+                                try {
+                                    var result =JSON.parse(data.payload);
+                                    if (result.sendSMS) {
+                                        result.options.source_user_iden = this.iden;
+                                        pusher.sendSMS(result.options, function(error, response) {
+                                            if (error) {
+                                                console.log("[send SMS] :",error);
+                                            }
+                                        });
+                                    }
+                                } catch (e) {
+                                    console.log("[Response]try parse: ", e);
                                 }
                                 pusher.dismissPush(push.iden);
                             }.bind(this));
