@@ -1,7 +1,7 @@
 'use strict';
 
-const Hapi = require('hapi');
-const server = Hapi.server({
+var Hapi = require('hapi');
+var server = Hapi.server({
     port: 21000,
     host: 'localhost'
 });
@@ -11,7 +11,7 @@ var Sms = require('./plugins/sms/sms.route');
 server.route(new Computer());
 server.route(new Sms());
 
-const init = async () => {
+var init = async () => {
 
     await server.start();
 

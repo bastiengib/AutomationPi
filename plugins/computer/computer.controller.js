@@ -19,7 +19,7 @@ Computer.prototype.powerOn = function () {
             console.log('[AutomationPi]: wol:'+error);
         }
     });
-    return "on";
+    return {option: "on"};
 }
 
 Computer.prototype.powerOff = function() {
@@ -31,7 +31,7 @@ Computer.prototype.powerOff = function() {
           console.log('[AutomationPi]: shutdown:' + error);
         }
     });
-    return "off";
+    return {option: "off"};
 }
 
 // on exporte en tant que constructeur pour le paramètre

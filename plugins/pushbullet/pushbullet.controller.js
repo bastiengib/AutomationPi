@@ -1,12 +1,47 @@
 var PushBullet = require('pushbullet');
 var config = require('./pushbullet.config');
 
+
 function Push (server) {
     var pusher = new PushBullet(config.token);
-    this.me(pusher);
 
+    // functions
+    this.me = function() {
+        pusher.me(function(err, response) {
+            this.iden = err ? undefined : response.iden;
+        }.bind(this));
+    };
+
+    this.awake = function() {
+        pusher.devices(function(error, response) {
+            if (!response) return;
+            var assistantDevice = response.devices.filter(function(device) { return device.nickname === "pi-listener" });
+            // on regarde si un "device" pour assistant-plugins existe, sinon on le crée
+            if (assistantDevice.length===0) {
+                pusher.createDevice({nickname:'pi-listener'}, function(error, response) {});
+            } else {
+                pusher.note(assistantDevice[0].iden, 'Note', 'Wake up pushbullet', function(error, response) {
+                    try {
+                        pusher.dismissPush(response.iden, function(error, response) {
+                            pusher.deletePush(response.iden, function(error, response) {})
+                        });
+                    } catch (e) {
+                        console.log("[Response] Dismiss wake-up: ", e);
+                    }
+                });
+            }
+        });
+    };
+
+    // end-functions
+
+    this.me();
+    this.awake();
+    setInterval(this.awake, 3600000);
+    
     var stream = pusher.stream();
     stream.connect();
+
     stream.on('error', function(error) { console.log("[pushbullet] Erreur de connexion : ",error) });
     
     stream.on('tickle', function(tickle) {
@@ -41,11 +76,5 @@ function Push (server) {
         }
     }.bind(this));
 };
-
-Push.prototype.me = function(pusher) {
-    pusher.me(function(err, response) {
-        this.iden = err ? undefined : response.iden;
-    }.bind(this));
-}
 
 module.exports = Push;

@@ -20,5 +20,11 @@
     "hapi": "^17.7.0",
     "node-wol": "^0.1.1",
     "pushbullet": "^2.3.0"
+  },
+  "devDependencies": {
+    "grunt": "^1.0.3",
+    "grunt-contrib-clean": "^2.0.0",
+    "grunt-contrib-concat": "^1.0.1",
+    "grunt-contrib-uglify": "^4.0.0"
   }
 }
