@@ -1,5 +1,6 @@
 var PushBullet = require('pushbullet');
 var config = require('./pushbullet.config');
+var fs = require('fs');
 
 
 function Push (server) {
@@ -18,9 +19,11 @@ function Push (server) {
             var assistantDevice = response.devices.filter(function(device) { return device.nickname === "pi-listener" });
             // on regarde si un "device" pour assistant-plugins existe, sinon on le crée
             if (assistantDevice.length===0) {
-                pusher.createDevice({nickname:'pi-listener'}, function(error, response) {});
+                pusher.createDevice({nickname:'pi-listener'}, function(error, response) {});                
+                console.log("[awake] create device: ", new Date());
             } else {
                 pusher.note(assistantDevice[0].iden, 'Note', 'Wake up pushbullet', function(error, response) {
+                    console.log("[awake] wakeup: ", new Date());
                     try {
                         pusher.dismissPush(response.iden, function(error, response) {
                             pusher.deletePush(response.iden, function(error, response) {})
