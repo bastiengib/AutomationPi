@@ -4,11 +4,12 @@ function AuthRoute() {
     var ctrl = new AuthCtrl();
     
     return [{ 
-        method: 'GET', 
+        method: 'POST', 
         path: '/auth/ifttt', 
         handler: function(request, h) {
-            var cmd = encodeURIComponent(request.payload.user)
+            var cmd = encodeURIComponent(request.payload.route)
             var token = ctrl.getIftttAuth(cmd);
+            return token;
         }
     }];
 }

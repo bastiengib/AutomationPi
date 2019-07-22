@@ -3,7 +3,22 @@
  * Constructeur
  */
 function AuthDao () {
-    this.connection = new (require('./db.dao'))(); 
+    this.db = new (require('./db.dao'))();
+    this.table = 'oauth2_token';
+}
+
+AuthDao.prototype.createAuth = function (token, date, command) {
+    var object = {
+        oat_token: token,
+        oat_date: date,
+        oat_command: command
+    };
+    return this.db.insert(this.table, object)
+    .then(f => {
+        console.log(f);
+    }).catch(e => {
+        console.log(e);
+    });
 }
 
 // on exporte en tant que constructeur pour le paramètre
