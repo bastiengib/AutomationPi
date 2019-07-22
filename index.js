@@ -3,7 +3,7 @@
 var Hapi = require('hapi');
 var server = Hapi.server({
     port: 21000,
-    host: 'localhost'
+    host: '127.0.0.1'
 });
 var WebSocket = require('./plugins/pushbullet/pushbullet.controller');
 var Computer = require('./plugins/computer/computer.route');

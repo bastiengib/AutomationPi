@@ -18,8 +18,10 @@
   "homepage": "https://github.com/bastiengib/AutomotionPi#readme",
   "dependencies": {
     "hapi": "^17.7.0",
+    "knex": "^0.19.0",
     "node-wol": "^0.1.1",
-    "pushbullet": "^2.3.0"
+    "pushbullet": "^2.3.0",
+    "wreck": "^14.2.0"
   },
   "devDependencies": {
     "grunt": "^1.0.4",
