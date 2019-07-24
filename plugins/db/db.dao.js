@@ -11,6 +11,10 @@ function Db () {
     this.connection = pg; 
 }
 
+Db.prototype.accessor = function (table) {
+    return this.connection(table);
+}
+
 Db.prototype.insert = function(table, object) {
     return this.connection(table).insert(object);
 }

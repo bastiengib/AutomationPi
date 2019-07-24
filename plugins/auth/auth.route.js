@@ -9,7 +9,7 @@ function AuthRoute() {
         handler: function(request, h) {
             var cmd = request.payload.route;
             var id = request.payload.id;
-            var token = ctrl.getIftttAuth(cmd, id);
+            var token = ctrl.getAuth(cmd, id);
             return token;
         }
     }];

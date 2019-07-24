@@ -6,7 +6,7 @@
 function Computer () {
     this.wol = require('node-wol');
     this.exec = require('child_process').exec;
-    this.config = require('./computer.config');
+    this.config = null;//require('./computer.config');
     this.authHelper = new (require('./../auth/auth.helper'))();
 }
 

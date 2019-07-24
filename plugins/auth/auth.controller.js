@@ -12,7 +12,7 @@ function Auth () {
     this.ifttt = new Ifttt();
 }
 
-Auth.prototype.getIftttAuth = async function (command, id) {
+Auth.prototype.getAuth = async function (command, id) {
     // generation d'un token
     var token = this.helper.makeToken(10);
     var date = new Date();
