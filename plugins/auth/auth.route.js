@@ -5,10 +5,11 @@ function AuthRoute() {
     
     return [{ 
         method: 'POST', 
-        path: '/auth/ifttt', 
+        path: '/auth/token', 
         handler: function(request, h) {
-            var cmd = encodeURIComponent(request.payload.route)
-            var token = ctrl.getIftttAuth(cmd);
+            var cmd = request.payload.route;
+            var id = request.payload.id;
+            var token = ctrl.getIftttAuth(cmd, id);
             return token;
         }
     }];

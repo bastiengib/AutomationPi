@@ -2,19 +2,23 @@
 var ComputerCtrl = require('./computer.controller');
 function ComputerRoute() {
     var ctrl = new ComputerCtrl();
-    
+
     return [{ 
-        method: 'GET', 
+        method: 'POST', 
         path: '/PC/POWER/ON', 
         handler: function(request, h) {
-            return ctrl.powerOn();
+            var token = request.payload.token;
+            var id = request.payload.id;
+            return ctrl.powerOn(id, token);
         }
     },
     { 
-        method: 'GET', 
+        method: 'POST', 
         path: '/PC/POWER/OFF', 
         handler: function(request, h) {
-            return ctrl.powerOff();
+            var token = request.payload.token;
+            var id = request.payload.id;
+            return ctrl.powerOff(id, token);
         }
     }];
 }
