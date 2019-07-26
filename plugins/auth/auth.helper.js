@@ -18,15 +18,16 @@ AuthHelper.prototype.makeToken = function(length) {
     return result;
 }
 
-AuthHelper.prototype.saveToken = function(id, token, date, command) {
+AuthHelper.prototype.saveToken = async function(id, token, date, command) {
     // delete old token
-    this.connection.deleteOldAuth();
-    return this.connection.createAuth(id, token, date, command);
+    await this.connection.deleteOldAuth();
+    return await this.connection.createAuth(id, token, date, command);
 }
 
-AuthHelper.prototype.checkToken = function(id, token, cmd) {
-    this.connection.deleteOldAuth();
-    return false;
+AuthHelper.prototype.checkToken = async function(id, token, cmd) {
+    await this.connection.deleteOldAuth();
+    var token = await this.connection.queryAuth(id, token, cmd);
+    return token.length > 0
 }
 
 // on exporte en tant que constructeur pour le paramètre

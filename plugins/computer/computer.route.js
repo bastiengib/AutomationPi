@@ -9,7 +9,9 @@ function ComputerRoute() {
         handler: function(request, h) {
             var token = request.payload.token;
             var id = request.payload.id;
-            return ctrl.powerOn(id, token);
+            var result =  ctrl.powerOn(id, token);
+
+            return h.response(result.status).code(result.code);
         }
     },
     { 
@@ -18,7 +20,9 @@ function ComputerRoute() {
         handler: function(request, h) {
             var token = request.payload.token;
             var id = request.payload.id;
-            return ctrl.powerOff(id, token);
+            var result =  ctrl.powerOff(id, token);
+
+            return h.response(result.status).code(result.code);
         }
     }];
 }

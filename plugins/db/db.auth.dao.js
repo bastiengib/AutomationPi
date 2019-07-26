@@ -23,8 +23,7 @@ AuthDao.prototype.createAuth = function (id, token, date, command) {
 }
 
 AuthDao.prototype.deleteOldAuth = async function () {
-    var t = new Date();
-    t.setSeconds(t.getSeconds() - 10);
+    var t = new Date(Date.now() - 20000);
 
     return this.db.accessor(this.table)
         .where('oat_date', '<', t.toUTCString())
@@ -32,7 +31,19 @@ AuthDao.prototype.deleteOldAuth = async function () {
         .then(f => {
             return f;
         }).catch(e => {
-            return false
+            return false;
+        });
+}
+
+AuthDao.prototype.queryAuth = function (id, token, cmd) {
+    return this.db.accessor(this.table)
+        .where('oat_id', id)
+        .where('oat_token', token)
+        .where('oat_command', cmd)
+        .then(f => {
+            return f;
+        }).catch(e => {
+            return [];
         });
 }
 
