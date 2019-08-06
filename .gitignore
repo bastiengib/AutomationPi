@@ -1,3 +1,6 @@
 node_modules/
 plugins/db/config/*
 plugins/ifttt/ifttt.config.js
+plugins/computer/computer.config.js
+plugins/pushbullet/pushbullet.config.js
+plugins/sms/sms.config.js
