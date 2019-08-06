@@ -6,10 +6,18 @@
 function Computer () {
     this.wol = require('node-wol');
     this.exec = require('child_process').exec;
-    this.config = require('./computer.config');
+    this.config = null;//require('./computer.config');
+    this.authHelper = new (require('./../auth/auth.helper'))();
 }
 
-Computer.prototype.powerOn = function () {
+Computer.prototype.powerOn = async function (id, token) {
+    // controle du token
+    if (!(await this.authHelper.checkToken(id, token, 'PC/POWER/ON'))) {
+        return {
+            status: "token not found or not longer available",
+            code: 401
+        };
+    }
     console.log('[AutomationPi]: Power On Computer');
     this.wol.wake('D4:3D:7E:E4:E3:DC', {
         adress: '192.168.1.255',
@@ -19,19 +27,24 @@ Computer.prototype.powerOn = function () {
             console.log('[AutomationPi]: wol:'+error);
         }
     });
-    return {option: "on"};
+    return { status: "power on", code: 200 };
 }
 
-Computer.prototype.powerOff = function() {
+Computer.prototype.powerOff = async function(id, token) {
+    // controle du token
+    if (!(await this.authHelper.checkToken(id, token, 'PC/POWER/OFF'))) {
+        return { status: "token not found or not longer available", code: 401 };
+    }
     console.log('[AutomationPi]: Power Off Computer');
     this.exec("net rpc shutdown -t 0 -C 'AutomotionPi : arrêt du système à distance demandé' "+this.config, function (error, stdout, stderr) {
         console.log('stdout: ' + stdout);
         console.log('stderr: ' + stderr);
         if (error !== null) {
           console.log('[AutomationPi]: shutdown:' + error);
+          return {status: "s", code: 200 };
         }
     });
-    return {option: "off"};
+    return {status: "power off", code: 200 };
 }
 
 // on exporte en tant que constructeur pour le paramètre
