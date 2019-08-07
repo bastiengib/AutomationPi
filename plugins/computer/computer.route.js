@@ -6,10 +6,10 @@ function ComputerRoute() {
     return [{ 
         method: 'POST', 
         path: '/PC/POWER/ON', 
-        handler: function(request, h) {
+        handler: async function(request, h) {
             var token = request.payload.token;
             var id = request.payload.id;
-            var result =  ctrl.powerOn(id, token);
+            var result =  await ctrl.powerOn(id, token);
 
             return h.response(result.status).code(result.code);
         }
@@ -17,10 +17,10 @@ function ComputerRoute() {
     { 
         method: 'POST', 
         path: '/PC/POWER/OFF', 
-        handler: function(request, h) {
+        handler: async function(request, h) {
             var token = request.payload.token;
             var id = request.payload.id;
-            var result =  ctrl.powerOff(id, token);
+            var result =  await ctrl.powerOff(id, token);
 
             return h.response(result.status).code(result.code);
         }
