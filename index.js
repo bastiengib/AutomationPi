@@ -1,9 +1,10 @@
 'use strict';
 
 var Hapi = require('hapi');
+var config = require("./server.config");
 var server = Hapi.server({
-    port: 21000,
-    host: '127.0.0.1'
+    port: config.PORT,
+    host: config.IP
 });
 //var WebSocket = require('./plugins/pushbullet/pushbullet.controller');
 var Computer = require('./plugins/computer/computer.route');
