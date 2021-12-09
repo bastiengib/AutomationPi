@@ -19,9 +19,9 @@ Computer.prototype.powerOn = async function (id, token) {
         };
     }
     console.log('[AutomationPi]: Power On Computer');
-    this.wol.wake('D4:3D:7E:E4:E3:DC', {
-        adress: '192.168.1.255',
-        port: 9
+    this.wol.wake(this.config.on_params.mac, {
+        adress: this.config.on_params.address,
+        port: this.config.on_params.port
     }, function(error) {
         if(error) {
             console.log('[AutomationPi]: wol:'+error);
@@ -36,7 +36,7 @@ Computer.prototype.powerOff = async function(id, token) {
         return { status: "token not found or not longer available", code: 401 };
     }
     console.log('[AutomationPi]: Power Off Computer');
-    this.exec("net rpc shutdown -t 0 -C 'AutomotionPi : arrêt du système à distance demandé' "+this.config, function (error, stdout, stderr) {
+    this.exec("net rpc shutdown -t 0 -C 'AutomotionPi : arrêt du système à distance demandé' "+this.config.off_params, function (error, stdout, stderr) {
         console.log('stdout: ' + stdout);
         console.log('stderr: ' + stderr);
         if (error !== null) {

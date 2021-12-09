@@ -1,9 +1,9 @@
-node_modules/
 plugins/db/config/*
 plugins/ifttt/ifttt.config.js
 plugins/computer/computer.config.js
 server.config.js
-.log
-log
-nohup.out
-
+node_modules
+.vscode
+.gitignore
+README.md
+.git
