@@ -6,10 +6,7 @@ var server = Hapi.server({
     port: config.PORT,
     host: config.IP
 });
-//var WebSocket = require('./plugins/pushbullet/pushbullet.controller');
-var webSocket = require('./plugins/websocket/websocket.controller');
 var Computer = require('./plugins/computer/computer.route');
-//var Sms = require('./plugins/sms/sms.route');
 var Auth = require('./plugins/auth/auth.route');
 
 server.route(new Computer());
